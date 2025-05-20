@@ -1,11 +1,13 @@
+// src/context/PortfolioContext.js
+
 import React, { createContext, useReducer, useEffect, useContext } from 'react';
 import CryptoJS from 'crypto-js';
 import { AuthContext } from './AuthContext';
 
 const STORAGE_KEY = '__portfolio_blob';
-const INITIAL = { cash: 100000, positions: {}, history: [] };
+const INITIAL_STATE = { cash: 100000, positions: {}, history: [] };
 
-function reducer(state, action) {
+function portfolioReducer(state, action) {
   switch (action.type) {
     case 'LOAD':
       return action.payload;
@@ -46,36 +48,50 @@ function reducer(state, action) {
   }
 }
 
-export const PortfolioContext = createContext();
+const PortfolioContext = createContext(INITIAL_STATE);
 
 export function PortfolioProvider({ children }) {
   const { cryptoKey } = useContext(AuthContext);
-  const [state, dispatch] = useReducer(reducer, INITIAL);
+  const [state, dispatch] = useReducer(portfolioReducer, INITIAL_STATE);
 
-  // Decrypt or initialize on load
+  // Load or init encrypted blob
   useEffect(() => {
     const blob = localStorage.getItem(STORAGE_KEY);
     if (blob) {
-      const dec = CryptoJS.AES.decrypt(blob, cryptoKey).toString(CryptoJS.enc.Utf8);
-      dispatch({ type: 'LOAD', payload: JSON.parse(dec) });
+      const decrypted = CryptoJS.AES
+        .decrypt(blob, cryptoKey)
+        .toString(CryptoJS.enc.Utf8);
+      dispatch({ type: 'LOAD', payload: JSON.parse(decrypted) });
     } else {
-      const enc = CryptoJS.AES.encrypt(JSON.stringify(INITIAL), cryptoKey).toString();
-      localStorage.setItem(STORAGE_KEY, enc);
+      const encrypted = CryptoJS.AES
+        .encrypt(JSON.stringify(INITIAL_STATE), cryptoKey)
+        .toString();
+      localStorage.setItem(STORAGE_KEY, encrypted);
     }
   }, [cryptoKey]);
 
-  // Encrypt on change
+  // Persist on any state change
   useEffect(() => {
-    const enc = CryptoJS.AES.encrypt(JSON.stringify(state), cryptoKey).toString();
-    localStorage.setItem(STORAGE_KEY, enc);
+    const encrypted = CryptoJS.AES
+      .encrypt(JSON.stringify(state), cryptoKey)
+      .toString();
+    localStorage.setItem(STORAGE_KEY, encrypted);
   }, [state, cryptoKey]);
 
-  const buy = (s, q, p) => dispatch({ type: 'BUY', symbol: s, qty: q, price: p });
-  const sell = (s, q, p) => dispatch({ type: 'SELL', symbol: s, qty: q, price: p });
+  const buy = (symbol, qty, price) =>
+    dispatch({ type: 'BUY', symbol, qty, price });
+
+  const sell = (symbol, qty, price) =>
+    dispatch({ type: 'SELL', symbol, qty, price });
 
   return (
     <PortfolioContext.Provider value={{ ...state, buy, sell }}>
       {children}
     </PortfolioContext.Provider>
   );
+}
+
+// **This export matches the import in all components:**
+export function usePortfolio() {
+  return useContext(PortfolioContext);
 }
