@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/TradeX/static/css/main.ab6f55b0.css",
+    "main.js": "/TradeX/static/js/main.724224c8.js",
+    "index.html": "/TradeX/index.html",
+    "main.ab6f55b0.css.map": "/TradeX/static/css/main.ab6f55b0.css.map",
+    "main.724224c8.js.map": "/TradeX/static/js/main.724224c8.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ab6f55b0.css",
+    "static/js/main.724224c8.js"
+  ]
+}
