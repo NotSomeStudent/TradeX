@@ -1,20 +1,15 @@
-
+// src/components/CandleChart.js
 import React from 'react';
 import { Chart, registerables } from 'chart.js';
-import {
-  FinancialController,
-  CandlestickElement
-} from 'chartjs-chart-financial';
+import 'chartjs-chart-financial';          // plugin side‐effect import
 import { Chart as ReactChart } from 'react-chartjs-2';
 
-Chart.register(
-  ...registerables,
-  FinancialController,
-  CandlestickElement
-);
+// register all core controllers, elements, scales, plugins
+Chart.register(...registerables);
 
 export default function CandleChart({ data }) {
-  const cfg = {
+  const config = {
+    type: 'candlestick',
     data: {
       datasets: [
         {
@@ -25,8 +20,13 @@ export default function CandleChart({ data }) {
     },
     options: {
       scales: {
-        x: { type: 'time', time: { unit: 'hour' } },
-        y: { position: 'right' }
+        x: {
+          type: 'time',
+          time: { unit: 'hour' }
+        },
+        y: {
+          position: 'right'
+        }
       },
       plugins: {
         zoom: {
@@ -39,5 +39,6 @@ export default function CandleChart({ data }) {
       }
     }
   };
-  return <ReactChart type="candlestick" {...cfg} />;
+
+  return <ReactChart {...config} />;
 }
