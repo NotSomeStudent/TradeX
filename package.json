@@ -2,7 +2,7 @@
   "name": "crypto-simulator",
   "version": "1.0.0",
   "private": true,
-  "homepage": "https://<your-username>.github.io/crypto-simulator",
+  "homepage": "https://notsomestudent.github.io/TradeX/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -17,7 +17,7 @@
     "crypto-js": "^4.1.1",
     "react-chartjs-2": "^5.2.0",
     "chart.js": "^4.2.1",
-    "chartjs-chart-financial": "^3.0.0",
+    "chartjs-chart-financial": "^0.2.1",
     "react-helmet": "^6.1.0",
     "react-router-dom": "^6.9.0",
     "tailwindcss": "^3.3.2"
