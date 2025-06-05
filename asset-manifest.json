@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/TradeX/static/css/main.ccb00237.css",
-    "main.js": "/TradeX/static/js/main.044edae1.js",
+    "main.css": "/TradeX/static/css/main.0df9fc78.css",
+    "main.js": "/TradeX/static/js/main.6a20dc3e.js",
     "index.html": "/TradeX/index.html",
-    "main.ccb00237.css.map": "/TradeX/static/css/main.ccb00237.css.map",
-    "main.044edae1.js.map": "/TradeX/static/js/main.044edae1.js.map"
+    "main.0df9fc78.css.map": "/TradeX/static/css/main.0df9fc78.css.map",
+    "main.6a20dc3e.js.map": "/TradeX/static/js/main.6a20dc3e.js.map"
   },
   "entrypoints": [
-    "static/css/main.ccb00237.css",
-    "static/js/main.044edae1.js"
+    "static/css/main.0df9fc78.css",
+    "static/js/main.6a20dc3e.js"
   ]
 }
