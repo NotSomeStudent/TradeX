@@ -1,5 +1,3 @@
-// src/context/PortfolioContext.js
-
 import React, { createContext, useReducer, useEffect, useContext } from 'react';
 import CryptoJS from 'crypto-js';
 import { AuthContext } from './AuthContext';
@@ -11,9 +9,10 @@ function portfolioReducer(state, action) {
   switch (action.type) {
     case 'LOAD':
       return action.payload;
+
     case 'BUY': {
       const { symbol, qty, price } = action;
-      const cost = qty * price * 1.001; // 0.1% fee
+      const cost = qty * price * 1.001; // include 0.1% fee
       return {
         ...state,
         cash: state.cash - cost,
@@ -27,9 +26,10 @@ function portfolioReducer(state, action) {
         ]
       };
     }
+
     case 'SELL': {
       const { symbol, qty, price } = action;
-      const proceeds = qty * price * 0.999;
+      const proceeds = qty * price * 0.999; // include 0.1% fee
       return {
         ...state,
         cash: state.cash + proceeds,
@@ -43,6 +43,7 @@ function portfolioReducer(state, action) {
         ]
       };
     }
+
     default:
       return state;
   }
@@ -54,27 +55,29 @@ export function PortfolioProvider({ children }) {
   const { cryptoKey } = useContext(AuthContext);
   const [state, dispatch] = useReducer(portfolioReducer, INITIAL_STATE);
 
-  // Load or init encrypted blob
+  // Load existing encrypted blob or initialize new one
   useEffect(() => {
     const blob = localStorage.getItem(STORAGE_KEY);
     if (blob) {
-      const decrypted = CryptoJS.AES
-        .decrypt(blob, cryptoKey)
-        .toString(CryptoJS.enc.Utf8);
+      const decrypted = CryptoJS.AES.decrypt(blob, cryptoKey).toString(
+        CryptoJS.enc.Utf8
+      );
       dispatch({ type: 'LOAD', payload: JSON.parse(decrypted) });
     } else {
-      const encrypted = CryptoJS.AES
-        .encrypt(JSON.stringify(INITIAL_STATE), cryptoKey)
-        .toString();
+      const encrypted = CryptoJS.AES.encrypt(
+        JSON.stringify(INITIAL_STATE),
+        cryptoKey
+      ).toString();
       localStorage.setItem(STORAGE_KEY, encrypted);
     }
   }, [cryptoKey]);
 
-  // Persist on any state change
+  // Re-encrypt on every state change
   useEffect(() => {
-    const encrypted = CryptoJS.AES
-      .encrypt(JSON.stringify(state), cryptoKey)
-      .toString();
+    const encrypted = CryptoJS.AES.encrypt(
+      JSON.stringify(state),
+      cryptoKey
+    ).toString();
     localStorage.setItem(STORAGE_KEY, encrypted);
   }, [state, cryptoKey]);
 
@@ -91,7 +94,6 @@ export function PortfolioProvider({ children }) {
   );
 }
 
-// **This export matches the import in all components:**
 export function usePortfolio() {
   return useContext(PortfolioContext);
 }
