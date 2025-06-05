@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/TradeX/static/css/main.ccb00237.css",
-    "main.js": "/TradeX/static/js/main.e58065ee.js",
+    "main.js": "/TradeX/static/js/main.ceda14a9.js",
     "index.html": "/TradeX/index.html",
     "main.ccb00237.css.map": "/TradeX/static/css/main.ccb00237.css.map",
-    "main.e58065ee.js.map": "/TradeX/static/js/main.e58065ee.js.map"
+    "main.ceda14a9.js.map": "/TradeX/static/js/main.ceda14a9.js.map"
   },
   "entrypoints": [
     "static/css/main.ccb00237.css",
-    "static/js/main.e58065ee.js"
+    "static/js/main.ceda14a9.js"
   ]
 }
