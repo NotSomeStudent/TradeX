@@ -1,5 +1,5 @@
 name: Build & Deploy
-# Grant this workflow write access to repo contents and Pages
+
 permissions:
   contents: write
   pages: write
