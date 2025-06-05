@@ -1,10 +1,9 @@
-// src/components/CandleChart.js
 import React from 'react';
 import { Chart, registerables } from 'chart.js';
-import 'chartjs-chart-financial';          // plugin side‐effect import
+import 'chartjs-chart-financial'; // side-effect registers controllers/elements
+import 'chartjs-plugin-zoom';
 import { Chart as ReactChart } from 'react-chartjs-2';
 
-// register all core controllers, elements, scales, plugins
 Chart.register(...registerables);
 
 export default function CandleChart({ data }) {
