@@ -4,15 +4,15 @@ import { NavLink } from 'react-router-dom';
 export default function Navbar() {
   const links = [
     { to: '/dashboard', label: 'Dashboard' },
-    { to: '/trade',     label: 'Trade'     },
-    { to: '/portfolio', label: 'Account'   },
-    { to: '/history',   label: 'History'   }
+    { to: '/trade', label: 'Trade' },
+    { to: '/portfolio', label: 'Account' },
+    { to: '/history', label: 'History' }
   ];
 
   return (
     <nav className="bg-white shadow p-4">
       <ul className="flex space-x-6">
-        {links.map(l => (
+        {links.map((l) => (
           <li key={l.to}>
             <NavLink
               to={l.to}
