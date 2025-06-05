@@ -2,7 +2,10 @@ import { useEffect, useState } from 'react';
 
 export function useBinance(symbol = 'btcusdt') {
   const [data, setData] = useState({
-    price: 0, change: 0, high: 0, low: 0
+    price: 0,
+    change: 0,
+    high: 0,
+    low: 0
   });
 
   useEffect(() => {
@@ -10,8 +13,8 @@ export function useBinance(symbol = 'btcusdt') {
       `wss://stream.binance.com:9443/ws/${symbol}@ticker`
     );
 
-    ws.onmessage = evt => {
-      const d = JSON.parse(evt.data);
+    ws.onmessage = (event) => {
+      const d = JSON.parse(event.data);
       setData({
         price: parseFloat(d.c),
         change: parseFloat(d.P),
@@ -22,7 +25,7 @@ export function useBinance(symbol = 'btcusdt') {
 
     ws.onerror = () => ws.close();
     ws.onclose = () => {
-      // could fallback to REST polling here
+      // Optionally implement a REST fallback here
     };
 
     return () => ws.close();
