@@ -8,8 +8,8 @@ export default function OrderBook({ symbol }) {
     fetch(
       `https://api.binance.com/api/v3/depth?symbol=${symbol.toUpperCase()}&limit=20`
     )
-      .then(r => r.json())
-      .then(d => {
+      .then((r) => r.json())
+      .then((d) => {
         setBids(d.bids.map(([p, q]) => ({ price: +p, qty: +q })));
         setAsks(d.asks.map(([p, q]) => ({ price: +p, qty: +q })));
       });
